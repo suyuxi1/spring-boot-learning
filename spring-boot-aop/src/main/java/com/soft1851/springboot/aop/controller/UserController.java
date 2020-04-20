@@ -1,6 +1,7 @@
 package com.soft1851.springboot.aop.controller;
 
 import com.soft1851.springboot.aop.annotation.AuthToken;
+import com.soft1851.springboot.aop.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,9 +24,10 @@ public class UserController {
      * @return
      */
     @GetMapping("hello")
-    public String hello(String name) {
+    public Result hello(String name) {
         log.info("hello()方法无需鉴权无需认证,当前用户名" + name);
-        return "hello方法访问成功";
+        return Result.success("hello方法访问成功");
+//        return "hello方法访问成功";
     }
 
     /**
@@ -36,10 +38,12 @@ public class UserController {
      */
     @GetMapping("user")
     @AuthToken
-    public String user(String name) {
+    public Result user(String name) {
         log.info("user()方法需要认证，当前用户名"+name);
-        return "user()方法访问成功";
+//        return "user()方法访问成功";
+        return Result.success("user()方法访问成功");
     }
+
 
     /**
      * 需要鉴权，加注解，加角色
@@ -47,10 +51,11 @@ public class UserController {
      * @return
      */
     @GetMapping("admin")
-    @AuthToken(role_name = {"admin","superAdmin"})
-    public String admin(String name){
+    @AuthToken(role_name = {"0","superAdmin"})
+    public Result admin(String name){
         log.info("admin()方法需要鉴权,当前用户名"+name);
-        return "admin()方法访问成功";
+        return Result.success("admin()方法访问成功");
+//        return "admin()方法访问成功";
     }
 
 
